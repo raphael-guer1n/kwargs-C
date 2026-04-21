@@ -11,6 +11,8 @@ typedef struct {
     const char *error_key;
 } kwargs_t;
 
+#define KW_GET(kwargs, key, out_ptr) \
+    kwargs_get((kwargs), (key), KW_TYPEOF_OUT(out_ptr), (out_ptr))
 
 #define KW_REQUIRE(kwargs, key, out_ptr)                                  \
     do {                                                                  \
