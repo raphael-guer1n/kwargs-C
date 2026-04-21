@@ -27,3 +27,26 @@ static const char *kwargs_find(kwargs_t *kwargs, const char *key) {
     kwargs->error_key = key;
     return NULL;
 }
+
+static int parse_int(const char *s, int *out) {
+    char *end = NULL;
+    long value;
+
+    if (s == NULL || *s == '\0') {
+        return 0;
+    }
+
+    errno = 0;
+    value = strtol(s, &end, 10);
+
+    if (errno != 0 || end == s || *end != '\0') {
+        return 0;
+    }
+
+    if (value < INT_MIN || value > INT_MAX) {
+        return 0;
+    }
+
+    *out = (int)value;
+    return 1;
+}
