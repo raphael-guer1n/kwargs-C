@@ -11,6 +11,15 @@ typedef struct {
     const char *error_key;
 } kwargs_t;
 
+void kwargs_init(kwargs_t *kwargs, int argc, char **argv);
+
+kw_error_t kwargs_get(
+    kwargs_t *kwargs,
+    const char *key,
+    kw_type_t type,
+    void *out
+);
+
 const char *kwargs_error_string(const kwargs_t *kwargs);
 
 #define KW_TYPEOF_OUT(ptr) _Generic((ptr), \
