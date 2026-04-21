@@ -12,6 +12,14 @@ typedef enum {
     KW_ERR_UNSUPPORTED_TYPE
 } kw_error_t;
 
+typedef enum {
+    KW_TYPE_INT = 0,
+    KW_TYPE_DOUBLE,
+    KW_TYPE_BOOL,
+    KW_TYPE_STR,
+    KW_TYPE_INVALID
+} kw_type_t;
+
 typedef struct {
     int argc;
     char **argv;
