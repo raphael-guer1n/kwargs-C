@@ -11,4 +11,15 @@ typedef struct {
     const char *error_key;
 } kwargs_t;
 
+
+#define KW_REQUIRE(kwargs, key, out_ptr)                                  \
+    do {                                                                  \
+        if (KW_GET((kwargs), (key), (out_ptr)) != KW_OK) {                \
+            fprintf(stderr, "kwargs error: key='%s': %s\n",               \
+                (kwargs)->error_key ? (kwargs)->error_key : (key),        \
+                kwargs_error_string((kwargs)));                           \
+            exit(EXIT_FAILURE);                                            \
+        }                                                                 \
+    } while (0)
+
 #endif
