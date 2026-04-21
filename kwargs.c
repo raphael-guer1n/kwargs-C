@@ -50,3 +50,22 @@ static int parse_int(const char *s, int *out) {
     *out = (int)value;
     return 1;
 }
+
+static int parse_double(const char *s, double *out) {
+    char *end = NULL;
+    double value;
+
+    if (s == NULL || *s == '\0') {
+        return 0;
+    }
+
+    errno = 0;
+    value = strtod(s, &end);
+
+    if (errno != 0 || end == s || *end != '\0') {
+        return 0;
+    }
+
+    *out = value;
+    return 1;
+}
