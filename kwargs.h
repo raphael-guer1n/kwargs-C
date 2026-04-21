@@ -3,6 +3,14 @@
 
 #include <stdbool.h>
 
+typedef enum {
+    KW_OK = 0,
+    KW_ERR_NOT_FOUND,
+    KW_ERR_INVALID_INT,
+    KW_ERR_INVALID_DOUBLE,
+    KW_ERR_INVALID_BOOL,
+    KW_ERR_UNSUPPORTED_TYPE
+} kw_error_t;
 
 typedef struct {
     int argc;
