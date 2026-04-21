@@ -69,3 +69,23 @@ static int parse_double(const char *s, double *out) {
     *out = value;
     return 1;
 }
+
+static int parse_bool(const char *s, bool *out) {
+    if (s == NULL) {
+        return 0;
+    }
+
+    if (strcmp(s, "1") == 0 || strcmp(s, "true") == 0 ||
+        strcmp(s, "yes") == 0 || strcmp(s, "on") == 0) {
+        *out = true;
+        return 1;
+    }
+
+    if (strcmp(s, "0") == 0 || strcmp(s, "false") == 0 ||
+        strcmp(s, "no") == 0 || strcmp(s, "off") == 0) {
+        *out = false;
+        return 1;
+    }
+
+    return 0;
+}
