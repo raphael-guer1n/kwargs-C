@@ -89,3 +89,63 @@ static int parse_bool(const char *s, bool *out) {
 
     return 0;
 }
+
+void kwargs_init(kwargs_t *kwargs, int argc, char **argv) {
+    kwargs->argc = argc;
+    kwargs->argv = argv;
+    kwargs->error = KW_OK;
+    kwargs->error_key = NULL;
+}
+
+kw_error_t kwargs_get(
+    kwargs_t *kwargs,
+    const char *key,
+    kw_type_t type,
+    void *out
+) {
+    const char *value = kwargs_find(kwargs, key);
+
+    if (value == NULL) {
+        return kwargs->error;
+    }
+
+    switch (type) {
+        case KW_TYPE_INT:
+            if (!parse_int(value, (int *)out)) {
+                kwargs->error = KW_ERR_INVALID_INT;
+                kwargs->error_key = key;
+                return kwargs->error;
+            }
+            break;
+
+        case KW_TYPE_DOUBLE:
+            if (!parse_double(value, (double *)out)) {
+                kwargs->error = KW_ERR_INVALID_DOUBLE;
+                kwargs->error_key = key;
+                return kwargs->error;
+            }
+            break;
+
+        case KW_TYPE_BOOL:
+            if (!parse_bool(value, (bool *)out)) {
+                kwargs->error = KW_ERR_INVALID_BOOL;
+                kwargs->error_key = key;
+                return kwargs->error;
+            }
+            break;
+
+        case KW_TYPE_STR:
+            *(const char **)out = value;
+            break;
+
+        case KW_TYPE_INVALID:
+        default:
+            kwargs->error = KW_ERR_UNSUPPORTED_TYPE;
+            kwargs->error_key = key;
+            return kwargs->error;
+    }
+
+    kwargs->error = KW_OK;
+    kwargs->error_key = NULL;
+    return KW_OK;
+}
