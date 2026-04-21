@@ -11,6 +11,17 @@ typedef struct {
     const char *error_key;
 } kwargs_t;
 
+const char *kwargs_error_string(const kwargs_t *kwargs);
+
+#define KW_TYPEOF_OUT(ptr) _Generic((ptr), \
+    int *: KW_TYPE_INT, \
+    double *: KW_TYPE_DOUBLE, \
+    bool *: KW_TYPE_BOOL, \
+    const char **: KW_TYPE_STR, \
+    char **: KW_TYPE_STR, \
+    default: KW_TYPE_INVALID \
+)
+
 #define KW_GET(kwargs, key, out_ptr) \
     kwargs_get((kwargs), (key), KW_TYPEOF_OUT(out_ptr), (out_ptr))
 
