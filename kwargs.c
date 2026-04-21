@@ -149,3 +149,22 @@ kw_error_t kwargs_get(
     kwargs->error_key = NULL;
     return KW_OK;
 }
+
+const char *kwargs_error_string(const kwargs_t *kwargs) {
+    switch (kwargs->error) {
+        case KW_OK:
+            return "no error";
+        case KW_ERR_NOT_FOUND:
+            return "key not found";
+        case KW_ERR_INVALID_INT:
+            return "invalid int";
+        case KW_ERR_INVALID_DOUBLE:
+            return "invalid double";
+        case KW_ERR_INVALID_BOOL:
+            return "invalid bool";
+        case KW_ERR_UNSUPPORTED_TYPE:
+            return "unsupported type";
+        default:
+            return "unknown error";
+    }
+}
